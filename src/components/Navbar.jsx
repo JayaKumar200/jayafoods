@@ -1,186 +1,60 @@
-// import React from "react";
-// import { Link } from "react-router-dom";
-// import food from '../assets/instamat.png'
-// import "./Navbar.css";
-
-// const Navbar = ({cartItems=[],setHomeCount,homeCount,search,setSearch}) => {
-//   return (
-//     <header className="header">
-//     <Link to='/Admin'>
-//       <h3 className='admin'>Admin:)</h3>
-//     </Link>
-//       <Link to="/" className="logo-container">
-//         <img
-//           src={food}
-//           alt="JK Instamat Logo"
-//           className="logo"
-//         />
-//         <h3>JK Instamat</h3>
-//       </Link>
-
-
-//       <div className="search-container">
-//       <Link to='/search'> 
-//         <input type="text" 
-//         placeholder="Search for food..." 
-//         className="search-bar"
-//         value={search}
-//         onChange={(e)=> setSearch(e.target.value)} />
-//         <img
-//           src="https://cdn-icons-png.flaticon.com/512/751/751463.png"
-//           alt="Search Icon"
-//           className="icon search-icon"
-//         />
-//         </Link>
-//       </div>
-
-//       <nav className="nav-links">
-//         <Link to="/offers" className="menu-item">
-//           <img
-//             src="https://cdn-icons-png.flaticon.com/512/726/726496.png"
-//             alt="Offer Icon"
-//             className="icon"
-//           />
-//           <span>Offers</span>
-//         </Link>
-
-//         <Link to="/signin" className="menu-item">
-//           <img
-//             src="https://cdn-icons-png.flaticon.com/512/747/747376.png"
-//             alt="Sign In Icon"
-//             className="icon"
-//           />
-//           <span>Sign In</span>
-//         </Link>
-
-//         <Link to="/cart" className="menu-item cart-section">
-//           <img
-//             src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png"
-//             alt="Cart Icon"
-//             className="icon cart-icon"
-//           />
-//           <span className="cart-text">Cart:({cartItems ?.length || 0 +homeCount})</span>
-//         </Link>
-//       </nav>
-//     </header>
-//   );
-// };
-
-// export default Navbar;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import food from "../assets/instamat.png";
 import "./Navbar.css";
 
-const Navbar = ({ cartItems = [], setHomeCount, homeCount, search, setSearch }) => {
+const Navbar = ({ cartItems = [], homeCount }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
 
-  // Function to toggle menu
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
+  // Handle screen resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 480);
+      if (window.innerWidth > 480) setMenuOpen(false); // Close menu on large screens
+    };
 
-  // Function to close menu when clicking a link
-  const closeMenu = () => {
-    setMenuOpen(false);
-  };
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
-    <header className="header">
-      {/* Admin Link */}
-      <Link to="/Admin">
-        <h3 className="admin">Admin :)</h3>
-      </Link>
-
-      {/* Logo */}
-      <Link to="/" className="logo-container">
-        <img src={food} alt="JK Instamat Logo" className="logo" />
-        <h3>JK Instamat</h3>
-      </Link>
-
-      {/* Search Bar */}
-      <div className="search-container">
-        <Link to="/search">
-          <input
-            type="text"
-            placeholder="Search for food..."
-            className="search-bar"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-          />
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/751/751463.png"
-            alt="Search Icon"
-            className="icon search-icon"
-          />
-        </Link>
-      </div>
-
-      {/* 3-Dots Menu Icon (Mobile) */}
-      <div className="menu-icon" onClick={toggleMenu}>
-        &#x22EE; {/* Unicode for 3 vertical dots (⋮) */}
-      </div>
-
-      {/* Navbar Links (Hidden in Mobile by Default) */}
-      <nav className={`nav-links ${menuOpen ? "open" : ""}`}>
-        <Link to="/offers" className="menu-item" onClick={closeMenu}>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/726/726496.png"
-            alt="Offer Icon"
-            className="icon"
-          />
-          <span>Offers</span>
+    <>
+      <header className="header">
+        <Link to="/" className="logo-container">
+          <img src={food} alt="JK Instamat Logo" className="logo" />
+          {!isMobile && <h3>JK Instamat</h3>}
         </Link>
 
-        <Link to="/signin" className="menu-item" onClick={closeMenu}>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/747/747376.png"
-            alt="Sign In Icon"
-            className="icon"
-          />
-          <span>Sign In</span>
-        </Link>
+        {/* 3-dot menu icon (only for small screens) */}
+        {isMobile ? (
+          <div className="menu-icon" onClick={() => setMenuOpen(!menuOpen)}>
+            &#x22EE;
+          </div>
+        ) : (
+          <nav className="nav-links">
+            <Link to='/' className='menu-item' >Home</Link>
+            <Link to="/offers" className="menu-item">Offers</Link>
+            <Link to="/signin" className="menu-item">Sign In</Link>
+            <Link to="/cart" className="menu-item cart-section">Cart ({cartItems.length + homeCount})</Link>
+            <Link to="/admin" className="menu-item">Admin</Link>
+          </nav>
+        )}
+      </header>
 
-        <Link to="/cart" className="menu-item cart-section" onClick={closeMenu}>
-          <img
-            src="https://cdn-icons-png.flaticon.com/512/1170/1170678.png"
-            alt="Cart Icon"
-            className="icon cart-icon"
-          />
-          <span className="cart-text">Cart:({cartItems.length + homeCount})</span>
-        </Link>
-      </nav>
-    </header>
+      {/* Mobile Full-Screen Menu */}
+      {menuOpen && isMobile && (
+        <div className="menu-overlay">
+          <nav className="nav-links">
+            <Link to="/" className="menu-item" onClick={() => setMenuOpen(false)}>Home</Link>
+            <Link to="/offers" className="menu-item" onClick={() => setMenuOpen(false)}>Offers</Link>
+            <Link to="/signin" className="menu-item" onClick={() => setMenuOpen(false)}>Sign In</Link>
+            <Link to="/cart" className="menu-item cart-section" onClick={() => setMenuOpen(false)}>Cart ({cartItems.length + homeCount})</Link>
+            <Link to="/admin" className="menu-item" onClick={() => setMenuOpen(false)}>Admin</Link>
+          </nav>
+        </div>
+      )}
+    </>
   );
 };
 

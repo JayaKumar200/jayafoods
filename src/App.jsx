@@ -27,7 +27,7 @@ const  [homeCount,setHomeCount]=useState(0)
         <Route path="/offers" element={<Offer />} />
         <Route path="/signin" element={<SignIn setUserName={setUserName} userName={userName}/>} />
         <Route path='/login' element={<Login  userName={userName}/>} />
-        <Route  path='/Admin' element={<Admin />}/>
+        <Route  path='/admin' element={<Admin />}/>
         <Route  path='/search' element={<Search search={search} setSearch={setSearch} />}/>
       </Routes>
     </div>

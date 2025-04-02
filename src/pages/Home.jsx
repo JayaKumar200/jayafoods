@@ -80,6 +80,7 @@ const Home = ({setHomeCount,homeCount}) => {
   return (
     <div className="container">
       <Navbar />
+      <h2>JK-Instamat</h2>
       
       <h2 className="content">{content}</h2>
       
