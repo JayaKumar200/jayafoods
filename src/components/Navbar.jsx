@@ -43,17 +43,16 @@ const Navbar = ({ cartItems = [], homeCount }) => {
       </header>
 
       {/* Mobile Full-Screen Menu */}
-      {menuOpen && isMobile && (
-        <div className="menu-overlay">
-          <nav className="nav-links">
-            <Link to="/" className="menu-item" onClick={() => setMenuOpen(false)}>Home</Link>
-            <Link to="/offers" className="menu-item" onClick={() => setMenuOpen(false)}>Offers</Link>
-            <Link to="/signin" className="menu-item" onClick={() => setMenuOpen(false)}>Sign In</Link>
-            <Link to="/cart" className="menu-item cart-section" onClick={() => setMenuOpen(false)}>Cart ({cartItems.length + homeCount})</Link>
-            <Link to="/admin" className="menu-item" onClick={() => setMenuOpen(false)}>Admin</Link>
-          </nav>
-        </div>
-      )}
+<div className={`menu-overlay ${menuOpen ? "active" : ""}`}>
+  <nav className="nav-links">
+    <Link to="/" className="menu-item" onClick={() => setMenuOpen(false)}>Home</Link>
+    <Link to="/offers" className="menu-item" onClick={() => setMenuOpen(false)}>Offers</Link>
+    <Link to="/signin" className="menu-item" onClick={() => setMenuOpen(false)}>Sign In</Link>
+    <Link to="/cart" className="menu-item cart-section" onClick={() => setMenuOpen(false)}>Cart ({cartItems.length + homeCount})</Link>
+    <Link to="/admin" className="menu-item" onClick={() => setMenuOpen(false)}>Admin</Link>
+  </nav>
+</div>
+
     </>
   );
 };
