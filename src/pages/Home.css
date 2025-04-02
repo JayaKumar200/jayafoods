@@ -212,7 +212,8 @@ ul {
   }
 
   .map-section{
-    width: 340px;
+    width:50%;
+    height:250px;
   }
   
   .content {

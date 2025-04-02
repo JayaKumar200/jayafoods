@@ -113,8 +113,9 @@
     font-weight: 500;
     
   }
-  .map-section{
-    width: 300px;
+   .map-section{
+    width:50%;
+    height:250px;
   }
 
   
