@@ -118,10 +118,7 @@ const Home = ({setHomeCount,homeCount}) => {
           allowFullScreen
           loading="lazy"
         ></iframe>
-
-
-
-      </div>
+        </div>
       <footer className="footer">
         <p>© {new Date().getFullYear()} JK Instamat. All Rights Reserved.</p>
         <p>Disclaimer: JK Instamat is an independent food delivery service and is not affiliated with other platforms.</p>
