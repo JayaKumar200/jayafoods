@@ -34,19 +34,20 @@ const Offer = () => {
   return (
     <div className="max-w-6xl mx-auto p-4">
       <Swiper
-        modules={[Pagination, Autoplay]}
-        spaceBetween={30}
-        slidesPerView={1}
-        pagination={{ clickable: true }}
-        autoplay={{ delay: 3000 }}
-        className="rounded-lg overflow-hidden shadow-md"
-      >
-        {bannerOffers.map((offer) => (
-          <SwiperSlide key={offer.id} className="bg-red-500 text-white text-center p-10 text-xl font-bold">
-            {offer.title}
-          </SwiperSlide>
-        ))}
-      </Swiper>
+  modules={[Pagination, Autoplay]}
+  spaceBetween={30}
+  slidesPerView={1}
+  pagination={{ clickable: true }}
+  autoplay={{ delay: 3000 }}
+  className="rounded-lg overflow-hidden shadow-md mt-10"
+>
+  {bannerOffers.map((offer) => (
+    <SwiperSlide key={offer.id} className="bg-red-500 text-white text-center p-10 text-xl font-bold">
+      {offer.title}
+    </SwiperSlide>
+  ))}
+</Swiper>
+
 
       <h2 className="text-xl font-bold mt-6">⏳ Limited Time Offers</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">

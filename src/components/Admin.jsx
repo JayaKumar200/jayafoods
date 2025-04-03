@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import admin from "../assets/jk.jpg";
+import githubLogo from "../assets/github.png"; // Add a GitHub logo image in your assets folder
 
 const Admin = () => {
   const [message, setMessage] = useState("");
@@ -11,8 +12,10 @@ const Admin = () => {
       return;
     }
 
-    alert("Message sent successfully!");
-    setMessage(""); 
+    window.location.href = `mailto:vjayakumar850@gmail.com?subject=Contact from Website&body=${encodeURIComponent(
+      message
+    )}`;
+    setMessage("");
   };
 
   return (
@@ -22,8 +25,9 @@ const Admin = () => {
       animate={{ opacity: 1 }}
       transition={{ duration: 1 }}
     >
+      {/* Profile Section */}
       <motion.div 
-        className="flex flex-col items-center text-center"
+        className="flex flex-col items-center text-center mt-10"
         initial={{ scale: 0 }}
         animate={{ scale: 1 }}
         transition={{ duration: 1 }}
@@ -35,6 +39,7 @@ const Admin = () => {
         <p className="text-gray-300 text-sm sm:text-base mt-2">Web Developer | Frontend Enthusiast | Tech Explorer</p>
       </motion.div>
 
+      {/* Contact Section */}
       <motion.div 
         className="bg-gray-800 p-4 rounded-lg shadow-md w-full max-w-lg mt-6 text-center"
         initial={{ x: -100, opacity: 0 }}
@@ -46,6 +51,20 @@ const Admin = () => {
         <p className="text-gray-200"><strong>📸 Instagram:</strong> <a href="https://www.instagram.com/kumar_.117" target="_blank" className="text-blue-400 hover:underline">@kumar_.117</a></p>
       </motion.div>
 
+      {/* GitHub Section */}
+      <motion.div
+        className="bg-gray-800 p-4 rounded-lg shadow-md w-full max-w-lg mt-6 flex flex-col items-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <h3 className="text-lg font-semibold text-center">💻 My GitHub</h3>
+        <a href="https://github.com/JayaKumar200" target="_blank" rel="noopener noreferrer">
+          <img src={githubLogo} alt="GitHub" className="w-16 h-16 mt-2 transition-transform transform hover:scale-110" />
+        </a>
+      </motion.div>
+
+      {/* Message Section */}
       <motion.div 
         className="mt-6 w-full max-w-lg bg-gray-800 p-4 rounded-lg shadow-md"
         initial={{ y: 50, opacity: 0 }}
@@ -64,9 +83,11 @@ const Admin = () => {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
-          Send Message 🚀
+          Click to Contact 📩
         </motion.button>
       </motion.div>
+
+      {/* Location Section */}
       <motion.div 
         className="w-full max-w-lg mt-6"
         initial={{ opacity: 0 }}
