@@ -7,6 +7,7 @@ const Navbar = ({ cartItems = [], homeCount = 0, search, setSearch }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
   const [searchQuery, setSearchQuery] = useState("");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,47 +22,54 @@ const Navbar = ({ cartItems = [], homeCount = 0, search, setSearch }) => {
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
+      setSearch(searchQuery);  // Updates App.jsx state
       navigate(`/search?q=${searchQuery}`);
     }
-    setSearch(searchQuery);
   };
 
   return (
-    <header className="fixed top-0 left-0 w-full bg-gray-900 shadow-md z-50 flex justify-between items-center px-6 py-4 md:px-12 transition-all">
+    <header className="fixed top-0 left-0 w-full bg-gray-900 shadow-md z-50 flex justify-between items-center px-6 py-3 md:px-10 transition-all">
 
-      <div className="flex items-center space-x-3">
+      {/* LOGO */}
+      <div className="flex items-center space-x-2">
         <Link to="/" className="flex items-center space-x-2">
-          <img src={food} alt="JK Instamat Logo" className="h-10 md:h-14 transition-transform duration-300 hover:scale-105" />
-          <h3 className="text-white text-lg md:text-xl font-bold tracking-wide">JK Instamat</h3>
+          <img src={food} alt="JK Instamat Logo" className="h-8 md:h-12 transition-transform duration-300 hover:scale-105" />
+          <h3 className="text-white text-sm md:text-lg font-bold tracking-wide">JK Instamat</h3>
         </Link>
-
-        <form onSubmit={handleSearch} className="relative hidden md:flex ml-6">
-          <input
-            type="text"
-            placeholder="Search food..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:outline-none w-56"
-          />
-          <button type="submit" className="absolute right-3 top-2.5 text-yellow-400">
-            <FiSearch className="text-xl" />
-          </button>
-        </form>
       </div>
 
-      <div className="hidden md:flex items-center space-x-6 text-white font-medium text-lg">
+      {/* SEARCH BAR (Desktop) */}
+      <form onSubmit={handleSearch} className="relative hidden md:flex ml-6">
+      <Link to='/search'>
+        <input
+          type="text"
+          placeholder="Search food..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="px-4 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:outline-none w-56"
+        />
+        </Link>
+        <button type="submit" className="absolute right-3 top-2.5 text-yellow-400">
+          <FiSearch className="text-xl" />
+        </button>
+      </form>
+
+      {/* NAVIGATION LINKS */}
+      <nav className="hidden md:flex items-center space-x-6 text-white font-medium text-sm md:text-lg">
         <Link to="/" className="hover:text-yellow-400 transition">Home</Link>
         <Link to="/offers" className="hover:text-yellow-400 transition">Offers</Link>
         <Link to="/signin" className="hover:text-yellow-400 transition">Sign In</Link>
-        <Link to='/search' className='hover:text-yellow-400 transition'>Search</Link>
+        <Link to="/search" className="hover:text-yellow-400 transition">Search</Link>
         <Link to="/cart" className="relative hover:text-yellow-400 transition flex items-center">
           <FiShoppingCart className="mr-1" /> Cart ({cartItems.length + homeCount})
         </Link>
         <Link to="/admin" className="hover:text-yellow-400 transition">Contact</Link>
-      </div>
+      </nav>
 
+      {/* SEARCH BAR (Mobile) */}
       {isMobile && (
         <form onSubmit={handleSearch} className="relative flex md:hidden items-center">
+        <Link to='/search'>
           <input
             type="text"
             placeholder="Search..."
@@ -69,12 +77,14 @@ const Navbar = ({ cartItems = [], homeCount = 0, search, setSearch }) => {
             onChange={(e) => setSearchQuery(e.target.value)}
             className="px-3 py-2 rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-yellow-500 focus:outline-none w-40"
           />
+          </Link>
           <button type="submit" className="absolute right-3 top-2.5 text-yellow-400">
             <FiSearch className="text-xl" />
           </button>
         </form>
       )}
 
+      {/* MOBILE MENU TOGGLE */}
       <div className="md:hidden flex items-center">
         {menuOpen ? (
           <FiX className="text-white text-3xl cursor-pointer" onClick={() => setMenuOpen(false)} />
@@ -83,12 +93,11 @@ const Navbar = ({ cartItems = [], homeCount = 0, search, setSearch }) => {
         )}
       </div>
 
+      {/* MOBILE MENU */}
       {menuOpen && isMobile && (
         <div className="fixed top-0 left-0 bg-white text-black flex flex-col items-start justify-start pt-20 pl-6 space-y-6 text-lg font-semibold z-50 w-3/4 h-full shadow-lg transition-all">
-
           <FiX className="absolute top-6 right-6 text-3xl cursor-pointer" onClick={() => setMenuOpen(false)} />
-
-  
+          
           <Link to="/" className="hover:text-yellow-500 transition" onClick={() => setMenuOpen(false)}>Home</Link>
           <Link to="/offers" className="hover:text-yellow-500 transition" onClick={() => setMenuOpen(false)}>Offers</Link>
           <Link to="/signin" className="hover:text-yellow-500 transition" onClick={() => setMenuOpen(false)}>Sign In</Link>
