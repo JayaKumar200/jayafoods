@@ -8,8 +8,12 @@ import hamburger from "../assets/hamburger.jpg";
 import chicken from "../assets/chicken.jpg";
 import baiq from "../assets/baiq-daling-ykThMylLsbY-unsplash.jpg";
 import brooke from "../assets/brooke-lark-jUPOXXRNdcA-unsplash.jpg";
+import {useDispatch} from 'react-redux';
+import {setIncrease} from '../slice/Slice';
+import {addToCart} from '../slice/CartSlice.jsx';
 
-const Home = ({ setHomeCount, homeCount }) => {
+
+const Home = ({}) => {
   const messages = useRef([
     "👋 Welcome to JK Instamat! Your favorite meals, delivered fresh & fast! 🚀🍔",
     "Hey there, foodie! 🍕 Craving something delicious? We’ve got you covered! 😋",
@@ -20,6 +24,7 @@ const Home = ({ setHomeCount, homeCount }) => {
   const [content, setContent] = useState(messages.current[0]);
   const scrollRef = useRef(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     let index = 0;
@@ -32,14 +37,16 @@ const Home = ({ setHomeCount, homeCount }) => {
 
   const foodItems = useMemo(
     () => [
-      { img: baiq, name: "Idly" },
-      { img: brooke, name: "Fruit Salad" },
-      { img: chicken, name: "Fried Chicken" },
-      { img: premium, name: "Croissant" },
-      { img: sushi, name: "Sushi" },
+      { img: baiq, name: "Idly",price:15 },
+      { img: brooke, name: "Fruit Salad",price: 50 },
+      { img: chicken, name: "Fried Chicken" , price: 200 },
+      { img: premium, name: "Croissant",price:300 },
+      { img: sushi, name: "Sushi",price:900 },
     ],
     []
   );
+
+
 
   const scrollLeft = useCallback(() => {
     scrollRef.current.scrollBy({ left: -300, behavior: "smooth" });
@@ -51,14 +58,15 @@ const Home = ({ setHomeCount, homeCount }) => {
 
   const handleCart = (item) => {
     navigate("/cart", { state: { selectedItem: item } });
-    setHomeCount(homeCount + 1);
+    dispatch(setIncrease())
+
+    dispatch(addToCart(item))
   };
 
   return (
-    //<div className="min-h-screen bg-gradient-to-b from-yellow-400 via-red-500 to-orange-500 text-white transition-all duration-500">
-      <div>
+        <div>
       <Navbar />
-      <h2 className="text-center text-4xl font-bold py-6 animate-pulse">JK-Instamat</h2>
+      <h2 className="text-center text-4xl font-bold py-6 animate-pulse my-6">JK-Instamat</h2>
       <h2 className="text-center text-lg italic text-white bg-black/50 px-4 py-2 rounded-md mx-auto w-fit">{content}</h2>
 
       <h2 className="text-3xl font-semibold text-center my-6">What's on Your Mind?</h2>

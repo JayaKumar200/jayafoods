@@ -11,7 +11,6 @@ import Search from "./components/Search.jsx";
 
 const App = () => {
   const [userName, setUserName] = useState("");
-  const [homeCount, setHomeCount] = useState(0);
   const [search, setSearch] = useState("");
   const [cartItems, setCartItems] = useState([
     { id: 1, name: "Pizza", price: 12.99, image: "pizza.jpg", quantity: 1 },
@@ -21,21 +20,19 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      {/* Navbar */}
+
       <Navbar
         cartItems={cartItems}
-        homeCount={homeCount}
-        setHomeCount={setHomeCount}
         search={search}
         setSearch={setSearch}
       />
       
-      {/* Page Content */}
+
       <main className="max-w-6xl mx-auto p-4 md:p-8">
         <Routes>
           <Route
             path="/"
-            element={<Main homeCount={homeCount} setHomeCount={setHomeCount} />}
+            element={<Main/>}
           />
           <Route
             path="/cart"
@@ -44,9 +41,9 @@ const App = () => {
           <Route path="/offers" element={<Offer />} />
           <Route
             path="/signin"
-            element={<SignIn setUserName={setUserName} userName={userName} />}
+            element={<SignIn />}
           />
-          <Route path="/login" element={<Login userName={userName} />} />
+          <Route path="/login" element={<Login  />} />
           <Route path="/admin" element={<Admin />} />
           <Route
             path="/search"

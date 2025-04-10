@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import admin from "../assets/jk.jpg";
-import githubLogo from "../assets/github.png"; // Add a GitHub logo image in your assets folder
-
+import githubLogo from "../assets/github.png"; 
 const Admin = () => {
   const [message, setMessage] = useState("");
 
@@ -39,7 +38,7 @@ const Admin = () => {
         <p className="text-gray-300 text-sm sm:text-base mt-2">Web Developer | Frontend Enthusiast | Tech Explorer</p>
       </motion.div>
 
-      {/* Contact Section */}
+
       <motion.div 
         className="bg-gray-800 p-4 rounded-lg shadow-md w-full max-w-lg mt-6 text-center"
         initial={{ x: -100, opacity: 0 }}
@@ -51,7 +50,7 @@ const Admin = () => {
         <p className="text-gray-200"><strong>📸 Instagram:</strong> <a href="https://www.instagram.com/kumar_.117" target="_blank" className="text-blue-400 hover:underline">@kumar_.117</a></p>
       </motion.div>
 
-      {/* GitHub Section */}
+
       <motion.div
         className="bg-gray-800 p-4 rounded-lg shadow-md w-full max-w-lg mt-6 flex flex-col items-center"
         initial={{ opacity: 0 }}
@@ -64,7 +63,6 @@ const Admin = () => {
         </a>
       </motion.div>
 
-      {/* Message Section */}
       <motion.div 
         className="mt-6 w-full max-w-lg bg-gray-800 p-4 rounded-lg shadow-md"
         initial={{ y: 50, opacity: 0 }}
@@ -87,7 +85,6 @@ const Admin = () => {
         </motion.button>
       </motion.div>
 
-      {/* Location Section */}
       <motion.div 
         className="w-full max-w-lg mt-6"
         initial={{ opacity: 0 }}

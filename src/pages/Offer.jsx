@@ -4,13 +4,18 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Autoplay } from "swiper/modules";
-
+import{useDispatch} from 'react-redux';
+import {setIncrease} from '../slice/Slice';
 const Offer = () => {
   const bannerOffers = [
     { id: 1, img: "", title: "Flat 50% OFF on Burgers!" },
     { id: 2, img: "", title: "Buy 1 Get 1 Free on Pizza!" },
     { id: 3, img: "", title: "Free Fries with Every Meal!" },
   ];
+
+  const dispatch = useDispatch();
+
+  const offerDispatch = useDispatch();
 
   const featuredDeals = Array.from({ length: 200 }, (_, index) => ({
     id: index + 1,
@@ -27,8 +32,10 @@ const Offer = () => {
 
   const navigate = useNavigate();
 
-  const handleAddToCart = () => {
+  const handleAddToCart = (offer) => {
     navigate("/cart");
+    dispatch(setIncrease())
+
   };
 
   return (
