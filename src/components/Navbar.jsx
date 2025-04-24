@@ -13,10 +13,23 @@ const Navbar = ({ cartItems = [], search, setSearch }) => {
   const navigate = useNavigate();
   const selector = useSelector((state)=> state.count.count);
   const dispatch = useDispatch();
+  // const nameSelector = useSelector((state)=> state.name.uName);
 
- 
+  // console.log(nameSelector)
+
+  
+const uName  = localStorage.getItem('userName') 
+
+  const slice = uName.slice(0,1).toUpperCase();
+
+useEffect(()=> {
+  if(uName){
+    alert(`WelCome to JKInstamat ${uName} `)
+  }
+},[])
 
   useEffect(() => {
+
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 480);
       if (window.innerWidth > 480) setMenuOpen(false);
@@ -32,6 +45,7 @@ const Navbar = ({ cartItems = [], search, setSearch }) => {
       navigate(`/search?q=${searchQuery}`);
     }
   };
+
 
   return (
     <header className="fixed top-0 left-0 w-full bg-gray-900 shadow-md z-50 flex justify-between items-center px-6 py-3 md:px-10 transition-all">
@@ -65,11 +79,12 @@ const Navbar = ({ cartItems = [], search, setSearch }) => {
         <Link to="/" className="hover:text-yellow-400 transition">Home</Link>
         <Link to="/offers" className="hover:text-yellow-400 transition">Offers</Link>
         <Link to="/signin" className="hover:text-yellow-400 transition">Sign In</Link>
+        <p className="text-yellow-400 font-semibold text-sm md:text-base ml-2">{slice}</p>
         <Link to="/search" className="hover:text-yellow-400 transition">Search</Link>
         <Link to="/cart" className="relative hover:text-yellow-400 transition flex items-center">
           <FiShoppingCart className="mr-1" /> Cart {selector}
         </Link>
-        <Link to="/admin" className="hover:text-yellow-400 transition">Contact</Link>
+       <Link to="/admin" className="hover:text-yellow-400 transition">Contact</Link>
       </nav>
 
 

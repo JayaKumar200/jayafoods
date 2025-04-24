@@ -121,6 +121,7 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { setData } from '../slice/SigninSlice.jsx';
+import axios from 'axios'
 
 const SignIn = () => {
   const [user, setUser] = useState({
@@ -137,7 +138,8 @@ const SignIn = () => {
     return emailRegex.test(email);
   };
 
-  const handleSignin = () => {
+const handleSignin = async () => {
+  try {
     const { userName, email, password } = user;
 
     if (userName.length < 7) {
@@ -156,9 +158,23 @@ const SignIn = () => {
     }
 
     dispatch(setData(user));
-    alert("Sign-in successful!");
-    navigate("/login");
-  };
+
+   const signin = await axios.post("http://192.168.43.252:3000/signup", user);
+
+    if (signin.status === 201) {
+      alert("Sign-in successful!");
+      console.log(signin.data.token)
+      console.log(signin.data)
+      localStorage.setItem('token', signin.data.token); 
+      navigate("/login");
+    } else {
+      console.log('Unexpected response status:', signin.status);
+    }
+  } catch (err) {
+    console.log(err.message);
+    alert("Sign-in failed!");
+  }
+};
 
   const handleUserData = (e) => {
     const { name, value } = e.target;
@@ -169,6 +185,7 @@ const SignIn = () => {
     }));
   };
 
+  
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm">
@@ -212,7 +229,8 @@ const SignIn = () => {
 
         <h3 className="text-center text-gray-600 mt-4">
           Already have an account?
-          <Link className="text-blue-500 hover:underline ml-1" to="/login">
+          <Link className="text-blue-500 hover:underline ml-1" 
+           to='/login'>
             Login Here
           </Link>
         </h3>
@@ -222,3 +240,13 @@ const SignIn = () => {
 };
 
 export default SignIn;
+
+
+
+
+
+
+
+
+
+

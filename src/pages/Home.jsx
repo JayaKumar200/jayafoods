@@ -11,6 +11,7 @@ import brooke from "../assets/brooke-lark-jUPOXXRNdcA-unsplash.jpg";
 import {useDispatch} from 'react-redux';
 import {setIncrease} from '../slice/Slice';
 import {addToCart} from '../slice/CartSlice.jsx';
+import axios from 'axios';
 
 
 const Home = ({}) => {
@@ -20,6 +21,9 @@ const Home = ({}) => {
     "🎉 Welcome to JK Instamat! First-time users get 10% OFF on their first order! 🍔🎊",
     "🚀 Hungry? Let’s Fix That! Order now & enjoy delicious meals at your doorstep! 🍕🍟",
   ]);
+
+
+ const productEmail = localStorage.getItem('email')
 
   const [content, setContent] = useState(messages.current[0]);
   const scrollRef = useRef(null);
@@ -45,7 +49,8 @@ const Home = ({}) => {
     ],
     []
   );
-
+  
+  const email = localStorage.getItem('email')
 
 
   const scrollLeft = useCallback(() => {
@@ -56,12 +61,32 @@ const Home = ({}) => {
     scrollRef.current.scrollBy({ left: 300, behavior: "smooth" });
   }, []);
 
-  const handleCart = (item) => {
-    navigate("/cart", { state: { selectedItem: item } });
-    dispatch(setIncrease())
+  const handleCart = async(item) => {
+      
+      try{
+        const product = await axios.post('http://192.168.43.252:3000/product',{item,productEmail})
+        if(product.status === 200){
+          navigate("/cart", { state: { selectedItem: item } });
+          dispatch(setIncrease())
+          dispatch(addToCart(item))
+          alert('Product is move to cart')
+          console.log(product.data.products)
+              localStorage.setItem('userProduct', JSON.stringify(product.data.products));
+            localStorage.setItem('productLength', product.data.products.length);
+        }else{
+          console.log('product api is error')
+        }
+      }catch(err){
+        console.log(`error is ${err.message}`)
 
-    dispatch(addToCart(item))
+        alert(`Error is ${err.message}`)
+      }
+          
+
   };
+
+
+
 
   return (
         <div>
@@ -121,6 +146,7 @@ const Home = ({}) => {
         <p className="text-sm text-gray-300">Disclaimer: JK Instamat is an independent food delivery service.</p>
       </footer>
     </div>
+    
   );
 };
 
